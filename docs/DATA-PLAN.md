@@ -1,0 +1,11 @@
+# Future ShopKey / Neon / repair story integration
+
+This is a proposed architecture, not an implemented integration. ShopKey runs on the shop computer. The owner reports confirmed SQL access; the database engine, supported backup method, schema, authentication, network access, and vendor integration terms have not been inspected in this project.
+
+1. **Recoverability first.** Identify the engine/version and vendor-supported backup and restore process. Schedule off-machine backups with retention and failure alerts. Perform a restore test. A transformed SQL export into Neon is not proof that ShopKey can be restored.
+2. **Private reporting copy.** A scheduled job at the shop reads only what is needed using a read-only account and pushes to a private reporting store. Confirm whether source SQL requires transformation for Neon’s PostgreSQL engine. Use encrypted connections, protected credentials, resumable checkpoints, reconciliation and failure reporting. Do not expose the shop SQL server to the public internet or place source credentials in browser code.
+3. **Editorial staging.** Prepare a small, explicitly selected record: year, make, model, broad symptom, verified findings, approved repair summary, and useful takeaway. Exclude customers, VINs, plates, invoice identifiers, dates that identify a visit, addresses, contact/payment information, pricing and internal notes. Treat technician free text as untrusted private data; do not copy it directly into a publishing system. Start with human review of every draft. Check re-identification risks for unusual vehicles.
+4. **Separate publication store.** Only approved public fields pass into a distinct store or exported content file. Website build credentials must not read private customer/sales data. Validate a fixed schema and publish status; render text safely. Maintain a withdrawal/correction process.
+5. **Static publishing.** An approved-content event can trigger an Astro rebuild. Add story detail routes, relevant service links, and sitemap entries from the approved source. A nightly import does not require a nightly public post: publish when a story provides useful original information.
+
+No database schema or example customer repair has been invented. The Repair Stories page currently explains what is coming and provides general car care guides in a distinct section.

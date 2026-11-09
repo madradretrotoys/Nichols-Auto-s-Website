@@ -1,0 +1,6 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import {shop} from '../data/site';
+---
+<Base title="Customer reviews" description="Hear from customers of Nichols Auto Repair in Wheat Ridge. Find the shop on Google to read reviews and share your experience."><section class="page-intro wrap"><span class="eyebrow">THE WORD AROUND THE NEIGHBORHOOD</span><h1>Good relationships.<br/><em>Real experiences.</em></h1><p>Choosing a mechanic is personal. Hearing from other drivers can help you get to know a shop.</p></section><section class="wrap section-bottom"><div class="review-panel"><Icon name="star"/><h2>Hear it from our customers.</h2><p>Visit our Google business listing to read customer reviews or share your own experience with Nichols.</p><a class="button" href={shop.maps} target="_blank" rel="noopener noreferrer">Find Nichols on Google <Icon/></a></div></section></Base>

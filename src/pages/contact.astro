@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import {shop} from '../data/site';
+---
+<Base title="Contact & plan your visit" description="Call Nichols Auto Repair at 303-421-1414. Visit us at 5030 Kipling Street in Wheat Ridge, Colorado. Talk with the shop about your car and service availability.">
+ <section class="page-intro wrap"><span class="eyebrow">LET’S START WITH HELLO</span><h1>A question. A noise.<br/><em>A plan for your car.</em></h1><p>You don’t have to have it figured out. That’s what we’re here for.</p></section>
+ <section class="wrap contact-grid section-bottom"><div><div class="contact-detail"><span class="eyebrow">CALL THE SHOP</span><a class="contact-phone" href={shop.phoneHref}>{shop.phone}</a><p>For service availability or a concern that needs prompt attention, calling is the best way to reach us.</p></div><div class="contact-detail"><span class="eyebrow">FIND US ON KIPLING</span><h2>{shop.street}</h2><p>{shop.city}</p><a class="text-link" href={shop.maps} target="_blank" rel="noopener noreferrer">Get directions <Icon name="pin"/></a></div><div class="contact-detail"><span class="eyebrow">SHOP HOURS</span><dl class="hours"><div><dt>Monday–Friday</dt><dd>8:30 am–5:30 pm</dd></div><div><dt>Saturday</dt><dd>Call for availability</dd></div><div><dt>Sunday</dt><dd>Closed</dd></div></dl></div><div class="mini-note"><h3>Financing questions?</h3><p>Call us to discuss current financing options, eligibility, and terms before arranging service.</p></div></div>
+ <div class="contact-form-panel"><span class="eyebrow">PREFER TO WRITE IT DOWN?</span><h2>Tell us what’s<br/><em>going on.</em></h2><p>This form prepares an email in your email app. You’ll review and send it there. It does not book an appointment.</p><form id="contact-form"><div class="form-row"><label>Your name<input name="name" autocomplete="name" required maxlength="100"/></label><label>Phone number<input name="phone" type="tel" autocomplete="tel" required maxlength="40"/></label></div><label>Your email<input name="email" type="email" autocomplete="email" required maxlength="150"/></label><label>Vehicle year, make & model <span>(optional)</span><input name="vehicle" placeholder="e.g. 2015 Subaru Outback" maxlength="150"/></label><label>What can we help with?<textarea name="message" rows="5" required maxlength="2500" placeholder="Tell us what you’ve noticed or what service you have in mind."></textarea></label><p class="small">Please leave out VINs, license plates, payment details, and other sensitive information.</p><button class="button" type="submit">Prepare my email <Icon/></button><p id="form-status" class="form-status" role="status" tabindex="-1"></p><a id="email-fallback" href={`mailto:${shop.email}`} hidden>Open my email draft →</a><p class="small">Or email <a href={`mailto:${shop.email}`}>{shop.email}</a> directly. Your appointment is only confirmed after you hear from the shop.</p></form></div>
+ </section>
+ <script define:vars={{email:shop.email}}>
+ document.querySelector('#contact-form').addEventListener('submit',event=>{
+  event.preventDefault();
+  const data=new FormData(event.currentTarget);
+  const body=`Name: ${data.get('name')}\nPhone: ${data.get('phone')}\nEmail: ${data.get('email')}\nVehicle: ${data.get('vehicle') || 'Not specified'}\n\n${data.get('message')}`;
+  const uri=`mailto:${email}?subject=${encodeURIComponent('Vehicle service inquiry — Nichols website')}&body=${encodeURIComponent(body)}`;
+  const fallback=document.querySelector('#email-fallback');fallback.href=uri;fallback.hidden=false;
+  const status=document.querySelector('#form-status');status.textContent='Your email draft is ready. Nothing has been sent by this website. Select Open my email draft below to review and send it in your email app. If you do not have an email app configured, call us or email the shop directly.';status.focus();
+ });
+ </script>
+</Base>

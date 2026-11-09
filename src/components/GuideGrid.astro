@@ -1,0 +1,6 @@
+---
+import {guides} from '../data/site';
+import Icon from './Icon.astro';
+const images=['/images/brake-service.jpg','/images/suspension.jpg','/images/engine-service.jpg'];
+---
+<div class="guide-grid">{guides.map((guide,index)=><a class="guide-card" href={`/guides/${guide.slug}/`}><div class="guide-image"><img src={images[index]} alt={['Close-up of brake service','Suspension components','Working on an engine'][index]} width="640" height="420" loading="lazy"/></div><div class="guide-copy"><span class="eyebrow">{guide.category} · CAR CARE GUIDE</span><h3>{guide.title}</h3><p>{guide.description}</p><span class="card-link">Read the guide <Icon/></span></div></a>)}</div>
